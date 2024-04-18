@@ -59,7 +59,6 @@ class NovaPermissionTool extends Tool
     public function rolePolicy(string $rolePolicy): NovaPermissionTool
     {
         $this->rolePolicy = $rolePolicy;
-
         return $this;
     }
 

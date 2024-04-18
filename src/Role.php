@@ -2,25 +2,20 @@
 
 namespace Vyuldashev\NovaPermission;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Gate;
-use Illuminate\Validation\Rule;
-use Laravel\Nova\Fields\DateTime;
-use Laravel\Nova\Fields\ID;
-use Laravel\Nova\Fields\MorphToMany;
-use Laravel\Nova\Fields\Select;
-use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Nova;
 use Laravel\Nova\Resource;
+use Laravel\Nova\Fields\ID;
+use Illuminate\Http\Request;
+use Laravel\Nova\Fields\Text;
+use Illuminate\Validation\Rule;
+use Laravel\Nova\Fields\Select;
+use Laravel\Nova\Fields\DateTime;
+use Illuminate\Support\Facades\Gate;
+use Laravel\Nova\Fields\MorphToMany;
 use Spatie\Permission\PermissionRegistrar;
 
 class Role extends Resource
 {
-    /**
-     * The model the resource corresponds to.
-     *
-     * @var string
-     */
     public static $model = \Spatie\Permission\Models\Role::class;
 
     /**
@@ -96,8 +91,8 @@ class Role extends Resource
 
             Text::make(__('nova-permission-tool::roles.name'), 'name')
                 ->rules(['required', 'string', 'max:255'])
-                ->creationRules('unique:'.config('permission.table_names.roles'))
-                ->updateRules('unique:'.config('permission.table_names.roles').',name,{{resourceId}}'),
+                ->creationRules('unique:' . config('permission.table_names.roles'))
+                ->updateRules('unique:' . config('permission.table_names.roles') . ',name,{{resourceId}}'),
 
             Select::make(__('nova-permission-tool::roles.guard_name'), 'guard_name')
                 ->options($guardOptions->toArray())

@@ -3,12 +3,12 @@
 namespace Vyuldashev\NovaPermission;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Collection;
-use Laravel\Nova\Actions\Action;
-use Laravel\Nova\Fields\ActionFields;
 use Laravel\Nova\Fields\Select;
+use Laravel\Nova\Actions\Action;
+use Illuminate\Support\Collection;
+use Laravel\Nova\Fields\ActionFields;
+use Illuminate\Queue\SerializesModels;
+use Illuminate\Queue\InteractsWithQueue;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class AttachToRole extends Action
@@ -24,7 +24,8 @@ class AttachToRole extends Action
      */
     public function handle(ActionFields $fields, Collection $models)
     {
-        $role = Role::getModel()->find($fields['role']);
+        $role = Role::getModel()::find($fields['role']);
+        
         foreach ($models as $model) {
             $role->givePermissionTo($model);
         }
@@ -39,8 +40,10 @@ class AttachToRole extends Action
     public function fields(NovaRequest $request)
     {
         return [
-            Select::make('Role')->options(Role::getModel()->get()->pluck('name',
-                'id')->toArray())->displayUsingLabels(),
+            Select::make('Role')->options(Role::getModel()::get()->pluck(
+                'name',
+                'id'
+            )->toArray())->displayUsingLabels(),
         ];
     }
 }
